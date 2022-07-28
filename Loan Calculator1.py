@@ -6,7 +6,6 @@ L = float(L)
 i = float(i)
 n = float(n)
 
-
 M = L * i * (1+i) * n / (1+i) * n - 1
 
 print('Your monthly payment is' + M)
