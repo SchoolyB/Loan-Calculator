@@ -6,7 +6,6 @@ L = float(L)
 i = float(i)
 n = float(n)
 
-numberOfPayments = n * 12
 
 M = L * i * (1+i) * n / (1+i) * n - 1
 
