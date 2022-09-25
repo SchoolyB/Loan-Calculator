@@ -1,98 +1,106 @@
-#Variables:
+#Version 2.0.0 
 
+
+from time import sleep
+
+
+#Declaring the fucntion for the loan calculate prompt
+
+def loanCalculate():
 #L = Loan amount as a whole number
 #R = Interest rate as a whole number
 #n = Lenghth of loan term in years as a whole number
 #i = Interest calculation
 #M = Monthly payment as floating number
-#CS = input('Lastly, What is your credit score?')
+    
+    L = input('How much would you like to borrow? \n')
+    R = input('What is the desired interest rate on your loan? \n')
+    n = input('How many years will the loan term be? \n')
+    
+    L = float(L)
+    R = float(R)
+    n = float(n)
 
-L = input('How much would you like to borrow? \n')
-R = input('What is the desired interest rate on your loan? \n')
-n = input('How many years will the loan term be? \n')
-CS = input('Lastly, What is your credit score? \n')
 
-L = float(L)
-R = float(R)
-n = float(n)
-CS = float(CS)
+    i = R / 100
 
-i = R / 100
+    print(R)
+    print(i)
 
-print(R)
-print(i)
+    numberofPayments = n*12
 
-numberofPayments = n*12
+    M = L * i * (1 + i) * n / ((1 + i) * n - 1)
 
-#Monthly Payment Loan Formula: M = L[i(1+i)n] / [(1+i)n-1]
+    print('So, You would like to borrow $' + str(L) + ' ' + 'And pay us back over ' + str(n)  + ' ' + 'years at an interest rate of ' + str(i) + '%?')
+    print('Okay! If approved Your monthly payment will be $' + str(M))
 
-M = L * i * (1 + i) * n / ((1 + i) * n - 1)
+#Calling The loan calculate Prompt
 
-print('So, You would like to borrow $' + str(L) + ' ' + 'And pay us back over ' + str(n)  + ' ' + 'years at an interest rate of ' + str(i) + '%?')
-print('Great! Your monthly payment will be $' + str(M))
+loanCalculate()
 
-#DECLARING FUNTIONS
 
-def runCredit():
-
-    if CS >= 850:
-        perfectScore()
-
-    elif CS <= 550:
-        needsWork()
-        score = questionContinue()
-        if score == 'y':
-            yesAnswer()
-        elif score == 'n':
-            noAnswer()
-        else:
-            questionContinue()
-
-    elif CS >= 550:
-        print('Your credit score is good')
-        score = questionContinue()
-        if score == 'y':
-            yesAnswer()
-        elif score =='n':
-            noAnswer()
-        else: 
-            questionContinue()
-    else:
-        runCredit()
-
-def questionContinue():
-    foo = input('Would you like to continue? y/n') #CHANGE VARIABLE NAME
-    if foo == 'n':
-        noAnswer()
-    elif foo == 'y':
-        yesAnswer()
-    else:
-        questionContinue()
-
-def yesAnswer():
-    print('Ok Great! Lets move foward!')
-
-def noAnswer():
-    print('Ok I think we are done here.')
-
-def needsWork():
-    print('Your credit score needs some work.')
-    wantResource = input('Would you like some resources on how to improve your credit score? y/n')
-    if wantResource == 'y':
-        print('Here is a link containing some useful information on how to improve your credit score.') #ADD LINK
-    elif wantResource == 'n':
-        print('Ok well there are many ways to increase your credit score. Goodluck.')
-    else:
-        needsWork()
-
-def goodCredit():
-    print('Your credit is good.')
+#Declaring Functions to be used in the continuation prompt
 
 def perfectScore():
-    print('You have a perfect credit score!')
+    print('Wow! You have a perfect credit score congratulations!')
 
-#CALLING FUNCTION
+def needsWork():
+    print('Your credit needs a little work but its not too bad')
+    
+def prettyGood():
+    print('Your credit is pretty good.')
 
-runCredit()
+def wantTips():
+    wantTips = input('Would you like some tips on how to improve your credit? y/n')
+    if wantTips == 'y':
+        print('Ok here are some helpful tips on ways to increase your credit score.') #add a list of tips
+    elif wantTips == 'n':
+        print('Well there are alot of resources out there. ')
+    else:
+        print('Please enter a valid answer')
+        sleep(3)
+        runCreditPrompt()
 
-#NEED TO FIGURE OUT WHY the questionContinue FUNCTION KEEPS RUNNING
+def runCreditPrompt():
+    creditScoreAnswer = input('Ok please tell me your credit score')
+    creditScoreAnswer = float(creditScoreAnswer)
+
+    if creditScoreAnswer <= 600:
+        needsWork()
+        wantTips()
+        
+    elif creditScoreAnswer >= 600:
+        prettyGood()
+        wantTips()
+
+    elif creditScoreAnswer ==850:
+        perfectScore()
+
+    else:
+        print('please enter a valid answer')
+        sleep(3)
+        runCreditPrompt()
+
+def initialContinue():
+    continueAnswer = input('Would you like to continue with with the loan? y/n')
+    if continueAnswer == 'y':
+        knowScore = input('Great! Would you happen to know what your credit score is? y/n')
+        if knowScore == 'y':
+            runCreditPrompt()
+        elif knowScore == 'n':
+            dontKnowScore = input('Ok, well once you know it please come back and tell me so we can continue')
+        else: 
+            print('Please enter a valid answer.')
+            sleep(3)
+            initialContinue()
+
+    elif continueAnswer == 'n':
+        noAnswer = input('Ok well I think we`re done here.')
+    else:
+        print('Please enter a valid answer.')
+        sleep(3)
+        initialContinue()
+
+
+#Calling the continuation prompt
+initialContinue()
